@@ -36,6 +36,13 @@ All core types are immutable Java **records**:
 
 **`StudyLayoutGenerator`** is the application entry point (`main`). Layout parameters (plot count, dimensions, buffers, bearing, anchor) are static fields. What gets generated is controlled by adding values to the `genChoices` `EnumSet` in the static initializer—most options are commented out by default. Output files are written to a UNC network path (`\\NAS4DRIVE\Server\WildlifeManagement\...`).
 
+## Code Style
+
+- Enum constants use **UpperCamelCase** (e.g. `RedThin`, `FooBar`), not `SCREAMING_SNAKE_CASE`.
+- Enum constants each go on their own line with a trailing `//` to prevent the formatter from collapsing them (e.g. `Red, //`).
+- Variable names use **lowerCamelCase**.
+- Javadoc comments use `///` Markdown-style (Java 24+), not `/** */` block comments.
+
 ## Key Conventions
 
 - All distances throughout the library are in **feet**.
