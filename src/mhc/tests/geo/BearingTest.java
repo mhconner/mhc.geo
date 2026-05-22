@@ -20,23 +20,17 @@ class BearingTest {
   
   public static boolean ShowOut = true;
   
-  /**
-   * @throws java.lang.Exception
-   */
+  /// @throws java.lang.Exception
   @BeforeAll
   static void setUpBeforeClass() throws Exception {
   }
-  
-  /**
-   * @throws java.lang.Exception
-   */
+
+  /// @throws java.lang.Exception
   @AfterAll
   static void tearDownAfterClass() throws Exception {
   }
   
-  /**
-   * @param d
-   */
+  /// @param d
   private void bearingTest(double d) {
     Bearing b = new Bearing(d);
     Out.formatD(ShowOut, "Bearing %.2f degrees is %s%n", d, b);
@@ -51,24 +45,18 @@ class BearingTest {
     assertEquals(expected, r.degrees(), DELTA);
   }
   
-  /**
-   * @throws java.lang.Exception
-   */
+  /// @throws java.lang.Exception
   @BeforeEach
   void setUp() throws Exception {
     Out.setDevelopmentMode(true);
   }
   
-  /**
-   * @throws java.lang.Exception
-   */
+  /// @throws java.lang.Exception
   @AfterEach
   void tearDown() throws Exception {
   }
   
-  /**
-   * Test method for {@link mhc.geo.Bearing#Bearing(double)}.
-   */
+  /// Test method for {@link mhc.geo.Bearing#Bearing(double)}.
   @Test
   void testBearing() {
     bearingTest(45.0);
@@ -81,9 +69,7 @@ class BearingTest {
     bearingTest( -90.0);
   }
   
-  /**
-   * Test method for {@link mhc.geo.Bearing#reverse()} and {@link Bearing#rotate(double)}.
-   */
+  /// Test method for {@link mhc.geo.Bearing#reverse()} and {@link Bearing#rotate(double)}.
   @Test
   void testReverse() {
     reverseTest(45.0, 225.0);
@@ -95,9 +81,7 @@ class BearingTest {
     assertEquals(revB.degrees(), rotB.degrees(), DELTA);
   }
   
-  /**
-   * Test method for {@link mhc.geo.Bearing#toRadians()}.
-   */
+  /// Test method for {@link mhc.geo.Bearing#toRadians()}.
   @Test
   void testToRadians() {
     toRadinsTest(180.0, Math.PI);

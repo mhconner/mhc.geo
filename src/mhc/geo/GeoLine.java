@@ -1,16 +1,12 @@
 package mhc.geo;
 
-/**
- * The GeoLine class represents a line segment defined by two geographic points.
- */
+/// The GeoLine class represents a line segment defined by two geographic points.
 public record GeoLine(GeoPoint start, GeoPoint end) {
-  
-  /**
-   * Constructs a new {@link GeoLine} with the specified start and end points.
-   *
-   * @param start the starting point of the line
-   * @param end the ending point of the line
-   */
+
+  /// Constructs a new {@link GeoLine} with the specified start and end points.
+  ///
+  /// @param start the starting point of the line
+  /// @param end the ending point of the line
   public GeoLine {
     if ((start == null) || (end == null))
       throw new IllegalArgumentException("Start and end points cannot be null.");
@@ -21,24 +17,20 @@ public record GeoLine(GeoPoint start, GeoPoint end) {
     return String.format("GeoLine(start=%s, end=%s)", start, end);
   }
 
-  /**
-   * Returns the length of the line segment in feet.
-   *
-   * @return the length of the line segment in feet
-   */
+  /// Returns the length of the line segment in feet.
+  ///
+  /// @return the length of the line segment in feet
   public double length() {
     return Geo.distance(start, end);
   }
   
-  /**
-   * Creates a new {@link GeoLine} from the specified start point, distance in feet, and
-   * bearing in degrees.
-   *
-   * @param start the starting point of the line
-   * @param distanceFeet the distance to project in feet
-   * @param bearingDegrees the bearing in degrees from the north
-   * @return a new {@link GeoLine} instance
-   */
+  /// Creates a new {@link GeoLine} from the specified start point, distance in feet, and
+  /// bearing in degrees.
+  ///
+  /// @param start the starting point of the line
+  /// @param distanceFeet the distance to project in feet
+  /// @param bearingDegrees the bearing in degrees from the north
+  /// @return a new {@link GeoLine} instance
   public static GeoLine fromBearingVal(GeoPoint start, double distanceFeet, double bearingDegrees) {
     return fromBearing(start, distanceFeet, new Bearing(bearingDegrees));
   }
@@ -56,11 +48,9 @@ public record GeoLine(GeoPoint start, GeoPoint end) {
     return new GeoLine(start, end);
   }
 
-  /**
-   * Returns the bearing from the start point to the end point in degrees.
-   *
-   * @return the bearing in degrees
-   */
+  /// Returns the bearing from the start point to the end point in degrees.
+  ///
+  /// @return the bearing in degrees
   private double bearingVal() {
     return Geo.bearing(start, end).degrees();
   }

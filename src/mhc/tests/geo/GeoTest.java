@@ -22,52 +22,42 @@ import mhc.geo.KMLGenerator;
 import mhc.geo.StudyLayoutGenerator;
 import mhc.io.Out;
 
-/**
- * Class: GeoTest
- */
+/// Class: GeoTest
 class GeoTest {
-  
+
   public static StudyLayoutGenerator gen;
-  
-  /**
-   * The Yaupon thicket BirdPuc and House BirdPuc are used for testing geographic calculations.
-   * These points are defined by their latitude and longitude.
-   */
+
+  /// The Yaupon thicket BirdPuc and House BirdPuc are used for testing geographic calculations.
+  /// These points are defined by their latitude and longitude.
   public GeoPoint yPt = new GeoPoint(30.799900, -96.757900); // Yaupon thicket BirdPuc
-  
-  /**
-   * The House BirdPuc is used for testing geographic calculations.
-   */
+
+  /// The House BirdPuc is used for testing geographic calculations.
   public GeoPoint hPt = new GeoPoint(30.801490, -96.758822); // House BirdPuc
 
-  /**
-   * @throws java.lang.Exception
-   */
+  /// @throws java.lang.Exception
   @BeforeAll
   static void setUpBeforeClass() throws Exception {
   }
-  
-  /**
-   * @throws java.lang.Exception
-   */
+
+  /// @throws java.lang.Exception
   @AfterAll
   static void tearDownAfterClass() throws Exception {
   }
-  
+
   public void assertClose(double expected, double actual) {
     assertClose(expected, actual, 0.01);
   }
-  
+
   public void assertClose(double expected, double actual, double percentTolerance) {
     double tolerance = Math.abs((percentTolerance / 100.0) * expected);
     assertTrue(Math.abs(expected - actual) <= tolerance, //
             String.format("Expected: %12.8f, Actual: %12.8f, Tolerance: %12.8f", expected, actual,
                     tolerance));
   }
-  
+
   public void checkDistance(Bearing baring, double distance) {
     int numSteps = 17;
-    GeoPoint anchor = StudyLayoutGenerator.LayoutAnchor;
+    GeoPoint anchor = StudyLayoutGenerator.layoutAnchor;
     GeoPoint oneStepPt = mhc.geo.Geo.projectPt(anchor, baring, distance);
     double oneStepDistance = mhc.geo.Geo.distance(anchor, oneStepPt);
     double distanceIncrmental = distance / numSteps;
@@ -93,26 +83,26 @@ class GeoTest {
             "checkDistance: baring: %8.3f, distance: %12.6f, increments: %d, diff: %10.6f%n",
             baring.degrees(), distance, numSteps, diff2Pts);
   }
-  
+
   public void genPlotsIncremental() {
     int numRows = gen.getTotalNumberOfPlotRows();
-    int numCols = StudyLayoutGenerator.NumberOfPlotColumns;
+    int numCols = StudyLayoutGenerator.numberOfPlotColumns;
     GeoRectangle[][] plots = new GeoRectangle[numRows][numCols];
-    GeoPoint rowAnchor = StudyLayoutGenerator.LayoutAnchor;
+    GeoPoint rowAnchor = StudyLayoutGenerator.layoutAnchor;
     for (int row = numRows; row > 0; row-- ) {
       GeoPoint plotAnchor = rowAnchor;
       int rowIndex = numRows - row;
       for (int col = 0; col < numCols; col++ ) {
-        plots[rowIndex][col] = GeoRectangle.fromCorner(plotAnchor, StudyLayoutGenerator.PlotWidth,
-                StudyLayoutGenerator.PlotHeight, StudyLayoutGenerator.HorizontalBearing);
-        plotAnchor = mhc.geo.Geo.projectPt(plotAnchor, StudyLayoutGenerator.HorizontalBearing,
-                StudyLayoutGenerator.PlotWidth + StudyLayoutGenerator.VerticalInnerBuffer);
+        plots[rowIndex][col] = GeoRectangle.fromCorner(plotAnchor, StudyLayoutGenerator.plotWidth,
+                StudyLayoutGenerator.plotHeight, StudyLayoutGenerator.horizontalBearing);
+        plotAnchor = mhc.geo.Geo.projectPt(plotAnchor, StudyLayoutGenerator.horizontalBearing,
+                StudyLayoutGenerator.plotWidth + StudyLayoutGenerator.verticalInnerBuffer);
       }
-      rowAnchor = Geo.projectPt(rowAnchor, StudyLayoutGenerator.VerticalBearing,
-              StudyLayoutGenerator.PlotHeight);
+      rowAnchor = Geo.projectPt(rowAnchor, StudyLayoutGenerator.verticalBearing,
+              StudyLayoutGenerator.plotHeight);
     }
   }
-  
+
   /// This test method generates a compass rose with points every 30 degrees at a distance of
   /// 100 feet
   @Test
@@ -129,13 +119,13 @@ class GeoTest {
       for (int bearingAngle = 0; bearingAngle < 360; bearingAngle += 30) {
         Bearing bearing = new Bearing(bearingAngle);
         GeoPoint pt = mhc.geo.Geo.projectPt(yPt, bearing, 200.0);
-        KMLGenerator.generateKMLLine(out, "Bearing " + bearingAngle, KMLGenerator.Style.YELLOW,
+        KMLGenerator.generateKMLLine(out, "Bearing " + bearingAngle, KMLGenerator.Style.Yellow,
                 new GeoLine(yPt, pt));
         KMLGenerator.generateLabel(out, "%03d".formatted(bearingAngle), pt);
       }
       GeoPoint boxAnchor = mhc.geo.Geo.projectPt(yPt, new Bearing(45.0), 400.0);
       GeoRectangle box = GeoRectangle.fromCorner(boxAnchor, 200.0, 200.0, new Bearing(45.0));
-      KMLGenerator.generateKMLRectangle(out, "Box", KMLGenerator.Style.RED_THIN, box);
+      KMLGenerator.generateKMLRectangle(out, "Box", KMLGenerator.Style.RedThin, box);
       KMLGenerator.generateLabel(out, "0:Anchor", boxAnchor);
       KMLGenerator.generateLabel(out, "1", box.c1());
       KMLGenerator.generateLabel(out, "2", box.c2());
@@ -145,23 +135,19 @@ class GeoTest {
       e.printStackTrace();
     }
   }
-  
-  /**
-   * @throws java.lang.Exception
-   */
+
+  /// @throws java.lang.Exception
   @BeforeEach
   void setUp() throws Exception {
     Out.setDevelopmentMode(true);
     gen = new StudyLayoutGenerator();
   }
 
-  /**
-   * @throws java.lang.Exception
-   */
+  /// @throws java.lang.Exception
   @AfterEach
   void tearDown() throws Exception {
   }
-  
+
   // @Test
   void testDirections() {
     try (PrintWriter out = new PrintWriter(Files.newBufferedWriter(
@@ -173,7 +159,7 @@ class GeoTest {
       for (int bearingAngle = 0; bearingAngle < 360; bearingAngle += 30) {
         Bearing bearing = new Bearing(bearingAngle);
         GeoPoint pt = mhc.geo.Geo.projectPt(yPt, bearing, 1000.0);
-        KMLGenerator.generateKMLLine(out, "Bearing " + bearingAngle, KMLGenerator.Style.YELLOW,
+        KMLGenerator.generateKMLLine(out, "Bearing " + bearingAngle, KMLGenerator.Style.Yellow,
                 new GeoLine(yPt, pt));
         KMLGenerator.generateLabel(out, "%03d".formatted(bearingAngle), pt);
       }
@@ -182,16 +168,14 @@ class GeoTest {
       e.printStackTrace();
     }
   }
-  
-  /**
-   * Test method for {@link mhc.geo.Geo#distance(mhc.geo.GeoPoint, mhc.geo.GeoPoint)}.
-   */
+
+  /// Test method for {@link mhc.geo.Geo#distance(mhc.geo.GeoPoint, mhc.geo.GeoPoint)}.
   @Test
   final void testDistance() {
-    checkDistance(StudyLayoutGenerator.VerticalBearing, 1675.0);
-    checkDistance(StudyLayoutGenerator.HorizontalBearing, 1675.0);
+    checkDistance(StudyLayoutGenerator.verticalBearing, 1675.0);
+    checkDistance(StudyLayoutGenerator.horizontalBearing, 1675.0);
   }
-  
+
   @Test
   void testLine() {
     GeoPoint pt1 = mhc.geo.Geo.projectPt(yPt, new Bearing(30.0), 1000.0);
@@ -205,10 +189,8 @@ class GeoTest {
             "Bearing from Yaupon thicket BirdPuc to projected point: " + bearing + " degrees");
     assertClose(30.0, bearing, 0.01);
   }
-  
-  /**
-   * Test method for {@link mhc.geo.Geo#projectPt(mhc.geo.GeoPoint, double, double)}.
-   */
+
+  /// Test method for {@link mhc.geo.Geo#projectPt(mhc.geo.GeoPoint, double, double)}.
   @Test
   final void testProject() {
     GeoPoint pt1 = mhc.geo.Geo.projectPt(yPt, new Bearing(120.0), 1000.0);

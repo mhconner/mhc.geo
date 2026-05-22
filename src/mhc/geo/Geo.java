@@ -14,13 +14,11 @@ public class Geo {
     return new Bearing(bearingVal(a, b));
   }
   
-  /**
-   * Calculates the bearing from point a to point b in degrees.
-   *
-   * @param a the starting geographic point
-   * @param b the destination geographic point
-   * @return the bearing in degrees from point A to point B
-   */
+  /// Calculates the bearing from point a to point b in degrees.
+  ///
+  /// @param a the starting geographic point
+  /// @param b the destination geographic point
+  /// @return the bearing in degrees from point A to point B
   private static double bearingVal(GeoPoint a, GeoPoint b) {
     double lat1 = Math.toRadians(a.lat());
     double lon1 = Math.toRadians(a.lon());
@@ -35,13 +33,11 @@ public class Geo {
     return (bearingDeg + 360.0) % 360.0; // Normalize to 0-360°
   }
 
-  /**
-   * Returns the distance between the two points on the earth's surface in feet using the
-   * Haversine formula.
-   *
-   * @param p1 the first geographic point
-   * @param p2 the second geographic point
-   */
+  /// Returns the distance between the two points on the earth's surface in feet using the
+  /// Haversine formula.
+  ///
+  /// @param p1 the first geographic point
+  /// @param p2 the second geographic point
   public static double distance(GeoPoint p1, GeoPoint p2) {
     double lat1 = p1.lat();
     double lon1 = p1.lon();
@@ -88,15 +84,13 @@ public class Geo {
     return projectPt(start, bearing.degrees(), overDelta, upDelta);
   }
   
-  /**
-   * Projects a new {@link GeoPoint} from the specified start point, distance in feet, and
-   * bearing in degrees.
-   *
-   * @param start the starting point
-   * @param bearingDegrees the bearing in degrees from the north
-   * @param distanceFeet the distance to project in feet
-   * @return a new {@link GeoPoint} projected from the start point
-   */
+  /// Projects a new {@link GeoPoint} from the specified start point, distance in feet, and
+  /// bearing in degrees.
+  ///
+  /// @param start the starting point
+  /// @param bearingDegrees the bearing in degrees from the north
+  /// @param distanceFeet the distance to project in feet
+  /// @return a new {@link GeoPoint} projected from the start point
   private static GeoPoint projectPt(GeoPoint start, double bearingDegrees, double distanceFeet) {
     double earthRadiusMeters = 6371000.0;
     double distanceMeters = distanceFeet * 0.3048;
@@ -112,16 +106,14 @@ public class Geo {
     return new GeoPoint(Math.toDegrees(lat2), Math.toDegrees(lon2));
   }
 
-  /**
-   * Projects a new {@link GeoPoint} from the specified start point over in the bearing line
-   * and up perpendicular to the bearing line.
-   *
-   * @param start the starting point
-   * @param bearing the bearing in degrees from the north
-   * @param overDelta the over distance to project in feet
-   * @param upDelta the up distance to project in feet
-   * @return a new {@link GeoPoint} projected from the start point
-   */
+  /// Projects a new {@link GeoPoint} from the specified start point over in the bearing line
+  /// and up perpendicular to the bearing line.
+  ///
+  /// @param start the starting point
+  /// @param bearing the bearing in degrees from the north
+  /// @param overDelta the over distance to project in feet
+  /// @param upDelta the up distance to project in feet
+  /// @return a new {@link GeoPoint} projected from the start point
   private static GeoPoint projectPt(GeoPoint start,
           double bearing,
           double overDelta,

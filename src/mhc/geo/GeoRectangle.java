@@ -52,42 +52,34 @@ public record GeoRectangle(GeoPoint c0, GeoPoint c1, GeoPoint c2, GeoPoint c3) {
     return new GeoRectangle(c0, c1, c2, c3);
   }
 
-  /**
-   * Returns a new {@link GeoLine} representing the lower edge of the rectangle going from the
-   * c0 corner to the c1 corner.
-   *
-   * @return a new {@link GeoLine} instance representing the lower edge
-   */
+  /// Returns a new {@link GeoLine} representing the lower edge of the rectangle going from the
+  /// c0 corner to the c1 corner.
+  ///
+  /// @return a new {@link GeoLine} instance representing the lower edge
   public GeoLine lower() {
     return new GeoLine(c0, c1);
   }
 
-  /**
-   * Returns a new {@link GeoLine} representing the right edge of the rectangle going from the
-   * c1 corner to the c2 corner.
-   *
-   * @return a new {@link GeoLine} instance representing the right edge
-   */
+  /// Returns a new {@link GeoLine} representing the right edge of the rectangle going from the
+  /// c1 corner to the c2 corner.
+  ///
+  /// @return a new {@link GeoLine} instance representing the right edge
   public GeoLine right() {
     return new GeoLine(c1, c2);
   }
 
-  /**
-   * Returns a new {@link GeoLine} representing the upper edge of the rectangle going from the
-   * c2 corner to the c3 corner.
-   *
-   * @return a new {@link GeoLine} instance representing the upper edge
-   */
+  /// Returns a new {@link GeoLine} representing the upper edge of the rectangle going from the
+  /// c2 corner to the c3 corner.
+  ///
+  /// @return a new {@link GeoLine} instance representing the upper edge
   public GeoLine upper() {
     return new GeoLine(c2, c3);
   }
   
-  /**
-   * Returns a new {@link GeoLine} representing the left edge of the rectangle going from the
-   * c3 corner to the c0 corner.
-   *
-   * @return a new {@link GeoLine} instance representing the left edge
-   */
+  /// Returns a new {@link GeoLine} representing the left edge of the rectangle going from the
+  /// c3 corner to the c0 corner.
+  ///
+  /// @return a new {@link GeoLine} instance representing the left edge
   public GeoLine left() {
     return new GeoLine(c3, c0);
   }

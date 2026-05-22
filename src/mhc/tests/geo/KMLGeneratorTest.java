@@ -47,45 +47,35 @@ class KMLGeneratorTest {
   
   public GeoLine line70Degree = GeoLine.fromBearing(hPt, 300.0, new Bearing(70.0));
 
-  /**
-   * @throws java.lang.Exception
-   */
+  /// @throws java.lang.Exception
   @BeforeAll
   static void setUpBeforeClass() throws Exception {
   }
-  
-  /**
-   * @throws java.lang.Exception
-   */
+
+  /// @throws java.lang.Exception
   @AfterAll
   static void tearDownAfterClass() throws Exception {
   }
-  
-  /**
-   * @throws java.lang.Exception
-   */
+
+  /// @throws java.lang.Exception
   @BeforeEach
   void setUp() throws Exception {
   }
-  
-  /**
-   * @throws java.lang.Exception
-   */
+
+  /// @throws java.lang.Exception
   @AfterEach
   void tearDown() throws Exception {
   }
   
-  /**
-   * Test method for
-   * {@link mhc.geo.KMLGenerator#generateHeader(java.io.PrintWriter, java.lang.String)}.
-   *
-   * @throws FileNotFoundException
-   */
+  /// Test method for
+  /// {@link mhc.geo.KMLGenerator#generateHeader(java.io.PrintWriter, java.lang.String)}.
+  ///
+  /// @throws FileNotFoundException
   @Test
   final void testGenerateDoc() throws FileNotFoundException {
     SOut.push();
     KMLGenerator.generateHeader(SOut.getOut(), "test");
-    KMLGenerator.generateKMLRectangle(SOut.getOut(), "testRect", KMLGenerator.Style.YELLOW, rect);
+    KMLGenerator.generateKMLRectangle(SOut.getOut(), "testRect", KMLGenerator.Style.Yellow, rect);
     // KMLGenerator.generateKMLLine(SOut.getOut(), "0Line", Style.RED2, line0Degree);
     // KMLGenerator.generateKMLLine(SOut.getOut(), "70Line", Style.YELLOW2, line70Degree);
     KMLGenerator.generateFooter(SOut.getOut());

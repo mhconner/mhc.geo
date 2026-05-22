@@ -71,11 +71,9 @@ public enum KMLColor {
     return colorValue.substring(2, 4);
   }
 
-  /**
-   * Returns the KML color value in aabbggrr format.
-   *
-   * @return the KML color string
-   */
+  /// Returns the KML color value in aabbggrr format.
+  ///
+  /// @return the KML color string
   public String getColorValue() {
     return colorValue;
   }

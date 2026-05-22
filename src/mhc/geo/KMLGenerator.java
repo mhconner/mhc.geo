@@ -2,49 +2,35 @@ package mhc.geo;
 
 import java.io.PrintWriter;
 
-/**
- * Class that provides support for generating KML (Keyhole Markup Language) files. The normal
- * sequence of calls is:
- * <ol>
- * <li>{@link #generateFooter(PrintWriter)}<br>
- * A mix of lines and rectangles:
- * <ol>
- * <li>{@link #generateKMLLine(PrintWriter, String, Style, GeoLine)}
- * <li>{@link #generateKMLRectangle(PrintWriter, String, Style, GeoRectangle)}</li>
- * <li>{@link #generateLabel(PrintWriter, String, GeoPoint)}</li>
- * <li>{@link #generateMarker(PrintWriter, String, GeoPoint)}</li>
- * <li>{@link #generateKMLPointCoordinates(PrintWriter, GeoPoint)}</li>
- * </ol>
- * <li>{@link #generateFooter(PrintWriter)}</li>
- * </ol>
- */
+/// Class that provides support for generating KML (Keyhole Markup Language) files. The normal
+/// sequence of calls is:
+/// <ol>
+/// <li>{@link #generateFooter(PrintWriter)}<br>
+/// A mix of lines and rectangles:
+/// <ol>
+/// <li>{@link #generateKMLLine(PrintWriter, String, Style, GeoLine)}
+/// <li>{@link #generateKMLRectangle(PrintWriter, String, Style, GeoRectangle)}</li>
+/// <li>{@link #generateLabel(PrintWriter, String, GeoPoint)}</li>
+/// <li>{@link #generateMarker(PrintWriter, String, GeoPoint)}</li>
+/// <li>{@link #generateKMLPointCoordinates(PrintWriter, GeoPoint)}</li>
+/// </ol>
+/// <li>{@link #generateFooter(PrintWriter)}</li>
+/// </ol>
 public class KMLGenerator {
 
-  /**
-   * Enumeration of color and fill styles that can be applied to KML elements. There names
-   * correspond to the style IDs defined in the KML_Styles constant.
-   */
+  /// Enumeration of color and fill styles that can be applied to KML elements. There names
+  /// correspond to the style IDs defined in the KML_Styles constant.
   public enum Style {
-    /**
-     * Style for yellow lines with a width of 2 pixels and no polygon fill.
-     */
-    YELLOW,
-    /**
-     * Style for green lines with a width of 2 pixels and no polygon fill.
-     */
-    GREEN,
-    /**
-     * Style for red lines with a width of 2 pixels and no polygon fill.
-     */
-    RED_THIN,
-    /**
-     * Style for red lines with a width of 4 pixels and no polygon fill.
-     */
-    RED_MEDIUM,
-    /**
-     * Style for red lines with a width of 2 pixels and a light yellow fill.
-     */
-    RED_LtYellowFill
+    /// Style for yellow lines with a width of 2 pixels and no polygon fill.
+    Yellow, //
+    /// Style for green lines with a width of 2 pixels and no polygon fill.
+    Green, //
+    /// Style for red lines with a width of 2 pixels and no polygon fill.
+    RedThin, //
+    /// Style for red lines with a width of 4 pixels and no polygon fill.
+    RedMedium, //
+    /// Style for red lines with a width of 2 pixels and a light yellow fill.
+    RedLtYellowFill //
   }
 
   public final static String KML_HEADER = """
@@ -56,7 +42,7 @@ public class KMLGenerator {
         """;
 
   public final static String KML_Styles = """
-    <Style id="YELLOW">
+    <Style id="Yellow">
         <LineStyle>
             <color>ff00ffff</color>
             <width>2</width>
@@ -66,7 +52,7 @@ public class KMLGenerator {
             <color>00ffffff</color>
         </PolyStyle>
     </Style>
-    <Style id="GREEN">
+    <Style id="Green">
         <LineStyle>
             <color>ff00ff00</color>
             <width>1</width>
@@ -76,7 +62,7 @@ public class KMLGenerator {
             <fill>0</fill>
         </PolyStyle>
     </Style>
-    <Style id="RED_THIN">
+    <Style id="RedThin">
         <LineStyle>
             <color>ff0000ff</color>
             <width>2</width>
@@ -86,7 +72,7 @@ public class KMLGenerator {
             <fill>0</fill>
         </PolyStyle>
     </Style>
-    <Style id="RED_MEDIUM">
+    <Style id="RedMedium">
         <LineStyle>
             <color>ff0000ff</color>
             <width>1</width>
@@ -96,7 +82,7 @@ public class KMLGenerator {
             <fill>0</fill>
         </PolyStyle>
     </Style>
-    <Style id="RED_LtYellowFill">
+    <Style id="RedLtYellowFill">
         <LineStyle>
             <color>ff0000ff</color>
             <width>2</width>
@@ -126,7 +112,7 @@ public class KMLGenerator {
         </ListStyle>
     </Style>
         """;
-  
+
   public static final String KML_FolderHeader = """
     <Folder>
         <name>%s</name>
@@ -149,7 +135,7 @@ public class KMLGenerator {
         </Point>
     </Placemark>
     """;
-  
+
   public static final String KML_Marker = """
     <Placemark>
         <name>%s</name>
@@ -160,36 +146,30 @@ public class KMLGenerator {
         </Point>
     </Placemark>
     """;
-  
-  /**
-   * Writes the KML footer to the specified PrintWriter.
-   *
-   * @param out the PrintWriter to write the KML footer to
-   */
+
+  /// Writes the KML footer to the specified PrintWriter.
+  ///
+  /// @param out the PrintWriter to write the KML footer to
   public static void generateFooter(PrintWriter out) {
     out.println(KML_Footer);
   }
 
-  /**
-   * Writes the KML header to the specified PrintWriter.
-   *
-   * @param out the PrintWriter to write the KML header to
-   * @param docName the name of the KML document and the single folder it contains.
-   */
+  /// Writes the KML header to the specified PrintWriter.
+  ///
+  /// @param out the PrintWriter to write the KML header to
+  /// @param docName the name of the KML document and the single folder it contains.
   public static void generateHeader(PrintWriter out, String docName) {
     out.format(KML_HEADER, docName);
     out.println(KML_Styles);
     out.format(KML_FolderHeader, docName);
   }
 
-  /**
-   * Generates a KML Placemark for a geographic line segment.
-   *
-   * @param out the PrintWriter to write the KML ton
-   * @param objectName the name of the object to be used in the KML Placemark
-   * @param style the {@link Style} to be applied to the line in the KML Placemark
-   * @param line the {@link GeoLine} to be represented in the KML Placemark
-   */
+  /// Generates a KML Placemark for a geographic line segment.
+  ///
+  /// @param out the PrintWriter to write the KML ton
+  /// @param objectName the name of the object to be used in the KML Placemark
+  /// @param style the {@link Style} to be applied to the line in the KML Placemark
+  /// @param line the {@link GeoLine} to be represented in the KML Placemark
   public static void generateKMLLine(PrintWriter out,
           String objectName,
           Style style,
@@ -210,29 +190,25 @@ public class KMLGenerator {
       </Placemark>
       """);
   }
-  
-  /**
-   * Generates a KML for the coordinates of a geographic point. E.g.:
-   *
-   * <pre>
-   * -96.75708624931713,30.80405859495939,0
-   * </pre>
-   *
-   * @param out the PrintWriter to write the KML coordinates to
-   * @param point the geographic point to generate KML coordinates for
-   */
+
+  /// Generates a KML for the coordinates of a geographic point. E.g.:
+  ///
+  /// <pre>
+  /// -96.75708624931713,30.80405859495939,0
+  /// </pre>
+  ///
+  /// @param out the PrintWriter to write the KML coordinates to
+  /// @param point the geographic point to generate KML coordinates for
   public static void generateKMLPointCoordinates(PrintWriter out, GeoPoint point) {
     out.format("%.8f,%.8f,0 %n", point.lon(), point.lat());
   }
-  
-  /**
-   * Generates a KML Placemark for a geographic rectangle.
-   *
-   * @param out the PrintWriter to write the KML to
-   * @param objectName the name of the object to be used in the KML Placemark
-   * @param style the {@link Style} to be applied to the rectangle in the KML Placemark
-   * @param rectangle the {@link GeoRectangle} to be represented in the KML Placemark
-   */
+
+  /// Generates a KML Placemark for a geographic rectangle.
+  ///
+  /// @param out the PrintWriter to write the KML to
+  /// @param objectName the name of the object to be used in the KML Placemark
+  /// @param style the {@link Style} to be applied to the rectangle in the KML Placemark
+  /// @param rectangle the {@link GeoRectangle} to be represented in the KML Placemark
   public static void generateKMLRectangle(PrintWriter out,
           String objectName,
           Style style,
@@ -262,25 +238,21 @@ public class KMLGenerator {
       </Placemark>
       """);
   }
-  
-  /**
-   * Generates a KML Placemark for a label at a centered at a specific geographic point.
-   *
-   * @param out the PrintWriter to write the KML to
-   * @param labelName the name of the label to be used in the KML Placemark
-   * @param point the {@link GeoPoint} where the label should be centered
-   */
+
+  /// Generates a KML Placemark for a label at a centered at a specific geographic point.
+  ///
+  /// @param out the PrintWriter to write the KML to
+  /// @param labelName the name of the label to be used in the KML Placemark
+  /// @param point the {@link GeoPoint} where the label should be centered
   public static void generateLabel(PrintWriter out, String labelName, GeoPoint point) {
     out.format(KML_Lable, labelName, point.lon(), point.lat());
   }
 
-  /**
-   * Generates a KML Placemark for a marker at a specific geographic point.
-   *
-   * @param out the PrintWriter to write the KML to
-   * @param PlacemarkName the name for the KML Placemark, this will not be displayed on the map
-   * @param point the {@link GeoPoint} where the marker should be placed
-   */
+  /// Generates a KML Placemark for a marker at a specific geographic point.
+  ///
+  /// @param out the PrintWriter to write the KML to
+  /// @param PlacemarkName the name for the KML Placemark, this will not be displayed on the map
+  /// @param point the {@link GeoPoint} where the marker should be placed
   public static void generateMarker(PrintWriter out, String PlacemarkName, GeoPoint point) {
     out.format(KML_Marker, PlacemarkName, point.lon(), point.lat());
   }
