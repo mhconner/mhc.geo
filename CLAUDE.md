@@ -41,7 +41,7 @@ All core types are immutable Java **records**:
 - Enum constants use **UpperCamelCase** (e.g. `RedThin`, `FooBar`), not `SCREAMING_SNAKE_CASE`.
 - Enum constants each go on their own line with a trailing `//` to prevent the formatter from collapsing them (e.g. `Red, //`).
 - Variable names use **lowerCamelCase**.
-- Javadoc comments use `///` Markdown-style (Java 24+), not `/** */` block comments.
+- Javadoc comments use `///` Markdown-style (Java 24+), not `/** */` block comments. Use `///` only on classes, methods, and fields — not on enum constants and not inside method bodies.
 
 ## Key Conventions
 
